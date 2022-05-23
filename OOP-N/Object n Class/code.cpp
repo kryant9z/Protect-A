@@ -1,73 +1,83 @@
 #include<iostream>
-#include<string>
+#include<iomanip>
+#include<cmath>
 
 using namespace std;
 
-class Hocsinh {
-	string name;
-	double dv, dt, dtb;
+class Diem{
+	int x, y;
 public:
+	// hàm khong có tham so
+	diem(){
+		x = 0;
+		y = 0;
+	}
+	// hàm có tham số
+	diem(int a, int b){
+		x = a;
+		y = b;
+	}
+	//hàm sao chép
+	diem(const Diem& d){
+		x = d.x;
+		y = d.y;
 
-	void nhap(){
-		cin.ignore();
-		getline(cin, name);
-		cin >> dv;
-		cin >> dt;
-	}
-	void xuat(){
-		cout << name << endl;
-		cout << xeploai();
-	}
-
-	string hoten(){
-		return name;
-	}
-	double diemt(){
-		return dt;
-	}
-	double diemv(){
-		return dv;
-	}
-	string xeploai(){
-		if(dtb >= 8.0){
-			return "Gioi";
-		}
-		if(dtb >= 7.0){
-			return "Kha";
-		}
-		if(dtb >=5.0){
-			return "Trung binh";
-		}
-		return "Yeu";
-	}
-	double tinhtb(){
-		return dtb = (dv+dt)/2;
 	}
 
-	void gangiatri(Hocsinh a){
-		dt =a.dt;
-		dv = a.dv;
-		dtb =a.dtb;
-		name = a.name;
+	~Diem(){}
+	// khỏi tạo hàm get- set
+	int getx(){
+		return x;
 	}
-	bool sosanh(Hocsinh a){
-		return dtb > a.dtb;
+
+	int gety(){
+		return y;
 	}
+	void setx(int a){
+		x = a;
+	}
+	void sety(int b){
+		y = b;
+	}
+
+	friend istream& operator >> (istream& is, Diem& d){
+		is >> d.x >> d.y;
+		return is;
+	}
+	friend ostream& operator << (ostream& os, Diem d){
+		os << "(" << d.x <<"," << d.y <<")";
+		return os;
+	}
+	Diem operator + (Diem a){
+		Diem kq;
+		kq.x = x+a.x;
+		kq.y = y+a.y;
+		return kq;
+	}
+	float kcach(Diem a){
+		return (sqrt(pow(x-a.x,2)+pow(y-a.y,2)));
+	}
+	bool ktra(int a, int b){
+		return (a*x+b*y == 0);
+	}
+
 };
 int main(){
-	Hocsinh a[100], max;
-	int n;
-	cin >> n;
-	for(int i = 0;i<n;i++){
-		a[i].nhap();
-		a[i].tinhtb();
+	Diem d1, d2;
+	cin >> d1 >> d2;
+	double kq;
+	int a, b;
+	cin >> a >> b;
+	cout << d1 << endl;
+	cout << d2 << endl;
+	cout << d1+d2 << endl;
+	kq = d1.kcach(d2);
+	cout << fixed << setprecision(2) << kq << endl;
+	if(d1.ktra(a,b)== true)
+	cout << "TRUE";
+	else{
+		cout << "NO";
 	}
-	max.gangiatri(a[0]);
-	for(int i =1;i<n;i++){
-		if(a[i].sosanh(max)){
-			max.gangiatri(a[i]);
-		}
-	}
-	max.xuat();
+
 	return 0;
 }

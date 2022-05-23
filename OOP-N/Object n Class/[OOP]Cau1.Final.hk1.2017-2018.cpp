@@ -51,7 +51,7 @@ int main(){
     cout<<d2<<endl;
     cout<<d1+d2<<endl;
     double kq=d1.kcach(d2);
-    printf("%.1lf\n",kq);
+   cout << fixed << setprecision(1) << kq << endl;
     
     if(d1.ktra(a,b)==true) cout<<"YES";
     else cout<<"NO";
